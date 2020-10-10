@@ -15,7 +15,6 @@ const reviewRouter = require('./routes/reviewRoutes');
 const bookingRouter = require('./routes/bookingRoutes');
 const AppError = require('./util/appError');
 const gloablErrorhandler = require('./controller/errorController');
-const { expressCspHeader, NONCE } = require('express-csp-header');
 
 
 const app = express();
@@ -36,7 +35,9 @@ app.options('*', cors());
 app.use(express.static(path.join(__dirname, 'public')));
 
 //set security http headers
-app.use(helmet());
+app.use(helmet({
+  contentSecurityPolicy: false,
+}));
 
 //development logging
 
@@ -99,16 +100,7 @@ if (process.env.NODE_ENV === 'production') {
   })
 }
 
-app.use(expressCspHeader({
-  directives: {
-      'script-src': 'sha256-TcWIJAqP/EDAVLsAnzy8xElaerjmbcgH8AG/RZbWwuM='
-  }
-}));
-// express will send header with a random nonce key "Content-Security-Policy: script-src 'nonce-pSQ9TwXOMI+HezKshnuRaw==';"
 
-app.use((req, res) => {
-  console.log(req.nonce); // 'pSQ9TwXOMI+HezKshnuRaw=='
-})
 
 //changing path to /api/v1/users/wishlist
 // app.use('/api/v1/users/wishlist', wishlistRouter);
