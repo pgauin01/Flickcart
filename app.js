@@ -86,6 +86,14 @@ app.use('/api/v1/users', userRouter);
 app.use('/api/v1/reviews', reviewRouter);
 app.use('/api/v1/bookings', bookingRouter);
 
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('client/build'));
+
+  app.get('*' , (req, res) =>{
+    res.sendFile(path.resolve(__dirname, 'client' , 'build' , 'index.html'))
+  })
+}
+
 //changing path to /api/v1/users/wishlist
 // app.use('/api/v1/users/wishlist', wishlistRouter);
 
@@ -95,12 +103,6 @@ app.all('*', (req, res, next) => {
 
 app.use(gloablErrorhandler);
 
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static('client/build'));
 
-  app.get('*' , (req, res) =>{
-    res.sendFile(path.resolve(__dirname, 'client' , 'build' , 'index.html'))
-  })
-}
 
 module.exports = app;
