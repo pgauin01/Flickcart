@@ -21,7 +21,7 @@ const app = express();
 app.enable('trust proxy');
 
 
-app.set('views', __dirname + '/client');
+app.set('views', __dirname + '/client/build');
 app.set('view engine', 'jsx');
 app.engine('jsx', require('express-react-views').createEngine());
 
