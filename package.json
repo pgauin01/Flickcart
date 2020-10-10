@@ -4,7 +4,7 @@
   "description": "node e-commerce",
   "main": "index.js",
   "scripts": {
-    "client-install":"npm install --save --prefix client",
+    "client-install": "npm install --save --prefix client",
     "build": "cd client && npm run install",
     "install-client": "cd client && npm install",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client",
@@ -22,6 +22,7 @@
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "express-csp-header": "^4.0.0",
     "express-mongo-sanitize": "^2.0.0",
     "express-rate-limit": "^5.1.3",
     "express-react-views": "^0.11.0",
