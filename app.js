@@ -20,6 +20,11 @@ const app = express();
 
 app.enable('trust proxy');
 
+
+app.set('views', __dirname + '/client');
+app.set('view engine', 'jsx');
+app.engine('jsx', require('express-react-views').createEngine());
+
 //implement cors
 
 app.use(cors());
