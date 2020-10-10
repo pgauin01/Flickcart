@@ -41,16 +41,7 @@ app.use(helmet());
 //development logging
 
  
-app.use(expressCspHeader({
-    directives: {
-        'script-src': 'sha256-TcWIJAqP/EDAVLsAnzy8xElaerjmbcgH8AG/RZbWwuM='
-    }
-}));
-// express will send header with a random nonce key "Content-Security-Policy: script-src 'nonce-pSQ9TwXOMI+HezKshnuRaw==';"
- 
-app.use((req, res) => {
-    console.log(req.nonce); // 'pSQ9TwXOMI+HezKshnuRaw=='
-})
+
 
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
@@ -107,6 +98,17 @@ if (process.env.NODE_ENV === 'production') {
     res.sendFile(path.resolve(__dirname, 'client' , 'build' , 'index.html'))
   })
 }
+
+app.use(expressCspHeader({
+  directives: {
+      'script-src': 'sha256-TcWIJAqP/EDAVLsAnzy8xElaerjmbcgH8AG/RZbWwuM='
+  }
+}));
+// express will send header with a random nonce key "Content-Security-Policy: script-src 'nonce-pSQ9TwXOMI+HezKshnuRaw==';"
+
+app.use((req, res) => {
+  console.log(req.nonce); // 'pSQ9TwXOMI+HezKshnuRaw=='
+})
 
 //changing path to /api/v1/users/wishlist
 // app.use('/api/v1/users/wishlist', wishlistRouter);
